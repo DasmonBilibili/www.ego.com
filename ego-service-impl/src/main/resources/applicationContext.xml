@@ -27,9 +27,10 @@
     <bean id="factory" class="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="dataSource"></property>
     	<property name="typeAliasesPackage" value="com.ego.pojo"></property>
+    	<!-- 加载本地的MyBatis配置文件，为了加载pagehelper插件。 -->
     	<property name="configLocation" value="classpath:mybatis.xml"></property>
     </bean>
-    <!-- 扫描器 -->
+    <!-- 扫描器9(mapper工厂) -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     	<property name="basePackage" value="com.ego.mapper"></property>
     	<property name="sqlSessionFactoryBeanName" value="factory"></property>
@@ -47,7 +48,7 @@
     		<tx:method name="*" read-only="true"/>
     	</tx:attributes>
     </tx:advice>
-    <!-- 配置aop -->
+    <!-- 配置aop 任务切面 -->
     <aop:config>
     	<aop:pointcut expression="execution(* com.ego.dubbo.service.impl.*.*(..))" id="mypoint"/>
     	<aop:advisor advice-ref="txAdvice" pointcut-ref="mypoint"/>
